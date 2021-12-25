@@ -1,4 +1,4 @@
-# MERN STACK + TYPESCRIPT + REDUX | BLOG TUTORIAL
+
 
 ## MERN Stack Build a blog app using MERN + Typescript + Redux + Bootstrap 5 + ReactQuill + Socket.io + Twilio
 
