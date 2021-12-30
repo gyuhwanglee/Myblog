@@ -3,7 +3,8 @@ import Users from '../models/userModel'
 import bcrypt from 'bcrypt'
 import jwt from 'jsonwebtoken'
 import {generateActiveToken} from '../config/generateToken'
-
+import sendMail from '../config/sendMail'
+import {validateEmail} from '../middleware/vaild'
 const authCtrl = {
   register: async(req: Request, res: Response) => {
     try {
@@ -18,12 +19,13 @@ const authCtrl = {
 
       const active_token = generateActiveToken({newUser})
 
-      res.json({
-        status: 'OK',
-        msg: 'Register successfully.', 
-        data: newUser,
-         active_token
-      })
+      const CLIENT_URL = `${process.env.BASE_URl}` 
+
+      const uri = `${CLIENT_URL}/active/${active_token}`
+      if(validateEmail(account)){
+        sendMail(account, uri, "Verify your email address")
+        return res.json({ msg: "Success! Please check your email." })
+      }
 
     } catch (err) {
       return res.status(500).json({msg: err.message})
